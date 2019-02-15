@@ -15,6 +15,7 @@ module Kong
 
     def initialize(attributes = {})
       super(attributes)
+      self.upstream_id = attributes["upstream"]["id"] if attributes["upstream"] && attributes["upstream"]["id"]
       raise ArgumentError, 'You must specify an upstream_id' unless self.upstream_id
     end
 
