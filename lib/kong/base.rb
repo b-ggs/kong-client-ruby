@@ -17,6 +17,22 @@ module Kong
 
       alias_method :all, :list
 
+      # List resources with prefix
+      # @return [Array]
+      def list_with_prefix(prefix, params={})
+        result = []
+        url = "#{prefix}#{self::API_END_POINT}"
+        json_data = Client.instance.get(url, params)
+        if json_data['data']
+          json_data['data'].each do |instance|
+            result << self.new(instance)
+          end
+        end
+        result
+      end
+
+      alias_method :all_with_prefix, :list_with_prefix
+
       # Create resource
       # @param [Hash] attributes
       def create(attributes = {})
@@ -161,6 +177,7 @@ module Kong
       use_consumer_end_point if respond_to?(:use_consumer_end_point)
       use_api_end_point if respond_to?(:use_api_end_point)
       use_upstream_end_point if respond_to?(:use_upstream_end_point)
+      use_service_end_point if respond_to?(:use_service_end_point)
     end
   end
 end
