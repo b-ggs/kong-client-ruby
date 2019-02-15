@@ -8,11 +8,6 @@ module Kong
 
     attr_accessor :service
 
-    def initialize(attributes = {})
-      super(attributes)
-      use_service_end_point
-    end
-
     # Convert Service end point relative to Kong Service resource
     def use_service_end_point
       self.api_end_point = "/services/#{self.service_id}#{self.class::API_END_POINT}" if self.service_id
